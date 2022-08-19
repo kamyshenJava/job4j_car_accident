@@ -13,6 +13,7 @@
         <th scope="col">Name</th>
         <th scope="col">Text</th>
         <th scope="col">Address</th>
+        <th scope="col">Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -22,9 +23,12 @@
             <td>${accident.name}</td>
             <td>${accident.text}</td>
             <td>${accident.address}</td>
+            <td><a class="btn btn-outline-success btn-sm mx-auto" href="<c:url value="/${accident.id}"/>">Edit</a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+<a class="btn btn-primary ms-3 mt-3" href="<c:url value="/create"/>">Add accident</a>
+
 </body>
 </html>
