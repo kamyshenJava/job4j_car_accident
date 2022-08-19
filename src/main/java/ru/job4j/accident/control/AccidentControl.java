@@ -2,10 +2,7 @@ package ru.job4j.accident.control;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.service.AccidentService;
 
@@ -30,11 +27,11 @@ public class AccidentControl {
         return "redirect:/";
     }
 
-    @GetMapping("/{id}")
-    public String edit(Model model, @PathVariable("id") int id) {
+    @GetMapping("/edit")
+    public String edit(Model model, @RequestParam("id") int id) {
         Optional<Accident> accident = accidentService.findById(id);
         if (accident.isEmpty()) {
-            return "/index";
+            return "index";
         }
         model.addAttribute("accident", accident.get());
         return "accident/edit";

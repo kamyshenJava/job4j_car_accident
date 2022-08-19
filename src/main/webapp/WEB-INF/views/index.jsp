@@ -23,7 +23,9 @@
             <td>${accident.name}</td>
             <td>${accident.text}</td>
             <td>${accident.address}</td>
-            <td><a class="btn btn-outline-success btn-sm mx-auto" href="<c:url value="/${accident.id}"/>">Edit</a></td>
+            <td><a class="btn btn-outline-success btn-sm mx-auto" href="<c:url value="/edit?id=${accident.id}"/>">
+                Edit
+            </a></td>
         </tr>
     </c:forEach>
     </tbody>
