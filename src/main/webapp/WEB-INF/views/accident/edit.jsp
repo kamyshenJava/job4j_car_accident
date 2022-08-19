@@ -20,6 +20,13 @@
             <div class="mb-4">
                 <input type="text" class="form-control" value="${accident.address}" name="address" required>
             </div>
+            <div class="mb-4">
+                <select class="form-select" name="type.id" required>
+                    <c:forEach var="type" items="${types}" >
+                    <option value="${type.id}"  ${type.id == accident.type.id ? "selected" : ""}>${type.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary w-100 my-3 shadow">Submit</button>
         </form>
     </div>

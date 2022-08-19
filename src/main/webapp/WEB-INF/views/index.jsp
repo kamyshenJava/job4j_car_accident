@@ -13,6 +13,7 @@
         <th scope="col">Name</th>
         <th scope="col">Text</th>
         <th scope="col">Address</th>
+        <th scope="col">Type</th>
         <th scope="col">Edit</th>
     </tr>
     </thead>
@@ -23,6 +24,7 @@
             <td>${accident.name}</td>
             <td>${accident.text}</td>
             <td>${accident.address}</td>
+            <td>${accident.type.name}</td>
             <td><a class="btn btn-outline-success btn-sm mx-auto" href="<c:url value="/edit?id=${accident.id}"/>">
                 Edit
             </a></td>
