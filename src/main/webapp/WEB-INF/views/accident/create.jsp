@@ -27,6 +27,14 @@
                     </c:forEach>
                 </select>
             </div>
+            <div class="mb-4">
+                <select class="form-select" multiple name="rule.ids" required>
+                    <option selected value="" disabled>Select a rule for the accident</option>
+                    <c:forEach var="rule" items="${rules}" >
+                        <option value="${rule.id}">${rule.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary w-100 my-3 shadow">Submit</button>
         </form>
     </div>

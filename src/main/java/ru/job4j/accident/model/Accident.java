@@ -1,21 +1,23 @@
 package ru.job4j.accident.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Accident {
     private int id;
     private String name;
     private String text;
     private String address;
-
     private AccidentType type;
+    private Set<Rule> rules;
 
-    public static Accident of(String name, String text, String address, AccidentType type) {
+    public static Accident of(String name, String text, String address, AccidentType type, Set<Rule> rules) {
         Accident accident = new Accident();
         accident.name = name;
         accident.text = text;
         accident.address = address;
         accident.type = type;
+        accident.rules = rules;
         return accident;
     }
 
@@ -57,6 +59,14 @@ public class Accident {
 
     public void setType(AccidentType type) {
         this.type = type;
+    }
+
+    public Set<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(Set<Rule> rules) {
+        this.rules = rules;
     }
 
     @Override

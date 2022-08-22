@@ -14,6 +14,7 @@
         <th scope="col">Text</th>
         <th scope="col">Address</th>
         <th scope="col">Type</th>
+        <th scope="col">Rules</th>
         <th scope="col">Edit</th>
     </tr>
     </thead>
@@ -25,6 +26,12 @@
             <td>${accident.text}</td>
             <td>${accident.address}</td>
             <td>${accident.type.name}</td>
+            <td>
+                <c:forEach varStatus="loop" var="rule" items="${accident.rules}">
+                    <span>${rule.name}<c:if test="${not loop.last}">,</c:if>
+                    </span>
+                </c:forEach>
+            </td>
             <td><a class="btn btn-outline-success btn-sm mx-auto" href="<c:url value="/edit?id=${accident.id}"/>">
                 Edit
             </a></td>

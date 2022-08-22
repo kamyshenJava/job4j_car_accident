@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Accident</title>
@@ -24,6 +25,14 @@
                 <select class="form-select" name="type.id" required>
                     <c:forEach var="type" items="${types}" >
                     <option value="${type.id}"  ${type.id == accident.type.id ? "selected" : ""}>${type.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="mb-4">
+                <select class="form-select" multiple name="rule.ids" required>
+                    <c:forEach var="rule" items="${rules}" >
+                        <spring:eval var="containsValue" expression="(accident.rules).contains(rule)" />
+                        <option value="${rule.id}" ${containsValue ? "selected" : ""}>${rule.name}</option>
                     </c:forEach>
                 </select>
             </div>

@@ -5,12 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class AccidentControl {
@@ -22,13 +22,13 @@ public class AccidentControl {
 
     @GetMapping("/create")
     public String create(Model model) {
-        addTypesToModel(model);
+        addTypesAndRulesToModel(model);
         return "accident/create";
     }
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        accident.setType(accidentService.findTypeById((Integer.parseInt(req.getParameter("type.id")))));
+        setTypeAndRules(accident, req);
         accidentService.create(accident);
         return "redirect:/";
     }
@@ -37,22 +37,33 @@ public class AccidentControl {
     public String edit(Model model, @RequestParam("id") int id) {
         Optional<Accident> accident = accidentService.findById(id);
         if (accident.isEmpty()) {
-            return "index";
+            return "redirect:/";
         }
         model.addAttribute("accident", accident.get());
-        addTypesToModel(model);
+        addTypesAndRulesToModel(model);
         return "accident/edit";
     }
 
     @PostMapping("edit")
     public String replace(@ModelAttribute Accident accident, HttpServletRequest req) {
-        accident.setType(accidentService.findTypeById((Integer.parseInt(req.getParameter("type.id")))));
+        setTypeAndRules(accident, req);
         accidentService.replace(accident);
         return "redirect:/";
     }
 
-    private void addTypesToModel(Model model) {
+    private void addTypesAndRulesToModel(Model model) {
         List<AccidentType> types = accidentService.getTypes();
+        List<Rule> rules = accidentService.getRules();
         model.addAttribute("types", types);
+        model.addAttribute("rules", rules);
+    }
+
+    private void setTypeAndRules(Accident accident, HttpServletRequest req) {
+        String[] ids = req.getParameterValues("rule.ids");
+        Set<Rule> rules = Arrays.stream(ids)
+                .map(id -> accidentService.findRuleById(Integer.parseInt(id)))
+                .collect(Collectors.toSet());
+        accident.setRules(rules);
+        accident.setType(accidentService.findTypeById((Integer.parseInt(req.getParameter("type.id")))));
     }
 }
