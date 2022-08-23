@@ -54,12 +54,11 @@ public class AccidentService {
         accidentMem.replace(accident);
     }
 
-    public void setTypeAndRules(Accident accident, HttpServletRequest req) {
-        String[] ids = req.getParameterValues("rule.ids");
+    public void setTypeAndRules(Accident accident, String[] ids, String typeId) {
         Set<Rule> rules = Arrays.stream(ids)
                 .map(id -> accidentMem.findRuleById(Integer.parseInt(id)))
                 .collect(Collectors.toSet());
         accident.setRules(rules);
-        accident.setType(accidentMem.findTypeById((Integer.parseInt(req.getParameter("type.id")))));
+        accident.setType(accidentMem.findTypeById((Integer.parseInt(typeId))));
     }
 }
