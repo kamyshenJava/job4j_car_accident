@@ -6,8 +6,12 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentMem;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AccidentService {
@@ -48,5 +52,14 @@ public class AccidentService {
 
     public void replace(Accident accident) {
         accidentMem.replace(accident);
+    }
+
+    public void setTypeAndRules(Accident accident, HttpServletRequest req) {
+        String[] ids = req.getParameterValues("rule.ids");
+        Set<Rule> rules = Arrays.stream(ids)
+                .map(id -> accidentMem.findRuleById(Integer.parseInt(id)))
+                .collect(Collectors.toSet());
+        accident.setRules(rules);
+        accident.setType(accidentMem.findTypeById((Integer.parseInt(req.getParameter("type.id")))));
     }
 }

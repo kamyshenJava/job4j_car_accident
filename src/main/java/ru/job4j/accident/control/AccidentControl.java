@@ -28,7 +28,7 @@ public class AccidentControl {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        setTypeAndRules(accident, req);
+        accidentService.setTypeAndRules(accident, req);
         accidentService.create(accident);
         return "redirect:/";
     }
@@ -46,7 +46,7 @@ public class AccidentControl {
 
     @PostMapping("edit")
     public String replace(@ModelAttribute Accident accident, HttpServletRequest req) {
-        setTypeAndRules(accident, req);
+        accidentService.setTypeAndRules(accident, req);
         accidentService.replace(accident);
         return "redirect:/";
     }
@@ -56,14 +56,5 @@ public class AccidentControl {
         List<Rule> rules = accidentService.getRules();
         model.addAttribute("types", types);
         model.addAttribute("rules", rules);
-    }
-
-    private void setTypeAndRules(Accident accident, HttpServletRequest req) {
-        String[] ids = req.getParameterValues("rule.ids");
-        Set<Rule> rules = Arrays.stream(ids)
-                .map(id -> accidentService.findRuleById(Integer.parseInt(id)))
-                .collect(Collectors.toSet());
-        accident.setRules(rules);
-        accident.setType(accidentService.findTypeById((Integer.parseInt(req.getParameter("type.id")))));
     }
 }
