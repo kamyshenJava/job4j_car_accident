@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.repository.AccidentMem;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,49 +17,49 @@ import java.util.stream.Collectors;
 @Service
 public class AccidentService {
 
-    private AccidentMem accidentMem;
+    private AccidentJdbcTemplate accidentStore;
 
-    public AccidentService(AccidentMem accidentMem) {
-        this.accidentMem = accidentMem;
+    public AccidentService(AccidentJdbcTemplate accidentStore) {
+        this.accidentStore = accidentStore;
     }
 
     public List<Accident> getAll() {
-        return accidentMem.getAll();
+        return accidentStore.getAll();
     }
 
     public List<AccidentType> getTypes() {
-        return accidentMem.getTypes();
+        return accidentStore.getTypes();
     }
 
     public List<Rule> getRules() {
-        return accidentMem.getRules();
+        return accidentStore.getRules();
     }
 
     public AccidentType findTypeById(int id) {
-        return accidentMem.findTypeById(id);
+        return accidentStore.findTypeById(id);
     }
 
     public Rule findRuleById(int id) {
-        return accidentMem.findRuleById(id);
+        return accidentStore.findRuleById(id);
     }
 
     public void create(Accident accident) {
-        accidentMem.create(accident);
+        accidentStore.create(accident);
     }
 
     public Optional<Accident> findById(int id) {
-        return accidentMem.findById(id);
+        return accidentStore.findById(id);
     }
 
     public void replace(Accident accident) {
-        accidentMem.replace(accident);
+        accidentStore.replace(accident);
     }
 
     public void setTypeAndRules(Accident accident, String[] ids, String typeId) {
         Set<Rule> rules = Arrays.stream(ids)
-                .map(id -> accidentMem.findRuleById(Integer.parseInt(id)))
+                .map(id -> accidentStore.findRuleById(Integer.parseInt(id)))
                 .collect(Collectors.toSet());
         accident.setRules(rules);
-        accident.setType(accidentMem.findTypeById((Integer.parseInt(typeId))));
+        accident.setType(accidentStore.findTypeById((Integer.parseInt(typeId))));
     }
 }

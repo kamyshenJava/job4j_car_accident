@@ -10,7 +10,6 @@ import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class AccidentControl {
