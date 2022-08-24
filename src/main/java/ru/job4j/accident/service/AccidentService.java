@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentHibernate;
 import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.repository.AccidentMem;
 
@@ -17,9 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class AccidentService {
 
-    private AccidentJdbcTemplate accidentStore;
+    private AccidentHibernate accidentStore;
 
-    public AccidentService(AccidentJdbcTemplate accidentStore) {
+    public AccidentService(AccidentHibernate accidentStore) {
         this.accidentStore = accidentStore;
     }
 
@@ -35,25 +36,25 @@ public class AccidentService {
         return accidentStore.getRules();
     }
 
-    public AccidentType findTypeById(int id) {
-        return accidentStore.findTypeById(id);
-    }
+//    public AccidentType findTypeById(int id) {
+//        return accidentStore.findTypeById(id);
+//    }
+//
+//    public Rule findRuleById(int id) {
+//        return accidentStore.findRuleById(id);
+//    }
 
-    public Rule findRuleById(int id) {
-        return accidentStore.findRuleById(id);
-    }
-
-    public void create(Accident accident) {
-        accidentStore.create(accident);
+    public void createOrUpdate(Accident accident) {
+        accidentStore.createOrUpdate(accident);
     }
 
     public Optional<Accident> findById(int id) {
         return accidentStore.findById(id);
     }
 
-    public void replace(Accident accident) {
-        accidentStore.replace(accident);
-    }
+//    public void replace(Accident accident) {
+//        accidentStore.replace(accident);
+//    }
 
     public void setTypeAndRules(Accident accident, String[] ids, String typeId) {
         Set<Rule> rules = Arrays.stream(ids)

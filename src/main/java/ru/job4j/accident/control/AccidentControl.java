@@ -30,7 +30,7 @@ public class AccidentControl {
         String[] ids = req.getParameterValues("rule.ids");
         String typeId = req.getParameter("type.id");
         accidentService.setTypeAndRules(accident, ids, typeId);
-        accidentService.create(accident);
+        accidentService.createOrUpdate(accident);
         return "redirect:/";
     }
 
@@ -50,7 +50,7 @@ public class AccidentControl {
         String[] ids = req.getParameterValues("rule.ids");
         String typeId = req.getParameter("type.id");
         accidentService.setTypeAndRules(accident, ids, typeId);
-        accidentService.replace(accident);
+        accidentService.createOrUpdate(accident);
         return "redirect:/";
     }
 
