@@ -5,10 +5,6 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentHibernate;
-import ru.job4j.accident.repository.AccidentJdbcTemplate;
-import ru.job4j.accident.repository.AccidentMem;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -36,14 +32,6 @@ public class AccidentService {
         return accidentStore.getRules();
     }
 
-//    public AccidentType findTypeById(int id) {
-//        return accidentStore.findTypeById(id);
-//    }
-//
-//    public Rule findRuleById(int id) {
-//        return accidentStore.findRuleById(id);
-//    }
-
     public void createOrUpdate(Accident accident) {
         accidentStore.createOrUpdate(accident);
     }
@@ -51,10 +39,6 @@ public class AccidentService {
     public Optional<Accident> findById(int id) {
         return accidentStore.findById(id);
     }
-
-//    public void replace(Accident accident) {
-//        accidentStore.replace(accident);
-//    }
 
     public void setTypeAndRules(Accident accident, String[] ids, String typeId) {
         Set<Rule> rules = Arrays.stream(ids)

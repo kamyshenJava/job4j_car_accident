@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-//@Repository
 public class AccidentJdbcTemplate {
     private final JdbcTemplate jdbc;
 

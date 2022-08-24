@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.Rule;
 
 import java.util.List;
 import java.util.function.Function;
