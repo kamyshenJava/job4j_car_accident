@@ -4,6 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 @Entity
+@NamedEntityGraph(
+        name = "accident-rules",
+        attributeNodes = {
+             @NamedAttributeNode("rules")
+        }
+)
 @Table(name = "accidents")
 public class Accident {
     @Id

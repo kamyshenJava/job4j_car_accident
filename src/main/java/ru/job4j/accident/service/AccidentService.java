@@ -5,6 +5,10 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentHibernate;
+import ru.job4j.accident.repository.AccidentRepository;
+import ru.job4j.accident.repository.AccidentTypeRepository;
+import ru.job4j.accident.repository.RulesRepository;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -14,37 +18,42 @@ import java.util.stream.Collectors;
 @Service
 public class AccidentService {
 
-    private AccidentHibernate accidentStore;
+    private AccidentRepository accidentRepository;
+    private AccidentTypeRepository accidentTypeRepository;
+    private RulesRepository rulesRepository;
 
-    public AccidentService(AccidentHibernate accidentStore) {
-        this.accidentStore = accidentStore;
+    public AccidentService(AccidentRepository accidentRepository, AccidentTypeRepository accidentTypeRepository,
+                           RulesRepository rulesRepository) {
+        this.accidentRepository = accidentRepository;
+        this.accidentTypeRepository = accidentTypeRepository;
+        this.rulesRepository = rulesRepository;
     }
 
     public List<Accident> getAll() {
-        return accidentStore.getAll();
+        return (List<Accident>) accidentRepository.findAll();
     }
 
     public List<AccidentType> getTypes() {
-        return accidentStore.getTypes();
+        return (List<AccidentType>) accidentTypeRepository.findAll();
     }
 
     public List<Rule> getRules() {
-        return accidentStore.getRules();
+        return (List<Rule>) rulesRepository.findAll();
     }
 
     public void createOrUpdate(Accident accident) {
-        accidentStore.createOrUpdate(accident);
+        accidentRepository.save(accident);
     }
 
     public Optional<Accident> findById(int id) {
-        return accidentStore.findById(id);
+        return accidentRepository.findById(id);
     }
 
     public void setTypeAndRules(Accident accident, String[] ids, String typeId) {
         Set<Rule> rules = Arrays.stream(ids)
-                .map(id -> accidentStore.findRuleById(Integer.parseInt(id)))
+                .map(id -> rulesRepository.findById(Integer.parseInt(id)).get())
                 .collect(Collectors.toSet());
         accident.setRules(rules);
-        accident.setType(accidentStore.findTypeById((Integer.parseInt(typeId))));
+        accident.setType(accidentTypeRepository.findById((Integer.parseInt(typeId))).get());
     }
 }
