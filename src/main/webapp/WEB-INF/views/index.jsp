@@ -40,6 +40,9 @@
     </tbody>
 </table>
 <a class="btn btn-primary ms-3 mt-3" href="<c:url value="/create"/>">Add accident</a>
+<div>
+    Login as : ${user.username}
+</div>
 
 </body>
 </html>
