@@ -1,12 +1,12 @@
-CREATE TABLE users (
-   username text NOT NULL,
-   password text NOT NULL,
-   enabled boolean default true,
-   PRIMARY KEY (username)
+CREATE TABLE authorities (
+    id serial primary key,
+    authority text NOT NULL unique
 );
 
-CREATE TABLE authorities (
-    username text NOT NULL,
-    authority text NOT NULL,
-    FOREIGN KEY (username) REFERENCES users(username)
+CREATE TABLE users (
+    id serial primary key,
+    username text NOT NULL unique,
+    password text NOT NULL,
+    enabled boolean default true,
+    authority_id int not null references authorities(id)
 );

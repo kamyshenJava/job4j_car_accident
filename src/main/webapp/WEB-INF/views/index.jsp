@@ -6,6 +6,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <div class="navbar-brand me-2">
+            Accidents
+        </div>
+        <div class="d-flex justify-content-end" id="navbarButtonsExample">
+            <div class="d-flex align-items-center">
+                <a class="nav-link" href="<c:url value="/logout"/>">
+                    <span>${user.username} </span>
+                    <span>| Log out</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <table class="table">
     <thead>
     <tr>
@@ -40,9 +57,6 @@
     </tbody>
 </table>
 <a class="btn btn-primary ms-3 mt-3" href="<c:url value="/create"/>">Add accident</a>
-<div>
-    Login as : ${user.username}
 </div>
-
 </body>
 </html>
