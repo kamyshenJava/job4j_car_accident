@@ -29,7 +29,7 @@ public class RegControl {
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthority(authorities.findByAuthority("ROLE_USER"));
-        if (users.save(user) == null) {
+        if (users.save(user).isEmpty()) {
             return "redirect:reg?error=true";
         }
         return "redirect:/login";

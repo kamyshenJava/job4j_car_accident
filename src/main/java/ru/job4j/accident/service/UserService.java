@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.User;
 import ru.job4j.accident.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -14,11 +16,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User save(User user) {
+    public Optional<User> save(User user) {
         try {
-            return userRepository.save(user);
+            return Optional.of(userRepository.save(user));
         } catch (DataAccessException e) {
-            return null;
+            return Optional.empty();
         }
     }
 }
